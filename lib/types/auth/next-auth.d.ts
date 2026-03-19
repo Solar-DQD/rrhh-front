@@ -7,6 +7,7 @@ declare module 'next-auth' {
       name: string;
       email: string;
       tipoUsuario: 'Administrativo' | 'Recursos Humanos' | 'Administrador';
+      proyecto: string;
     } & DefaultSession['user'];
   };
 
@@ -15,6 +16,7 @@ declare module 'next-auth' {
     name: string;
     email: string;
     tipoUsuario: 'Administrativo' | 'Recursos Humanos' | 'Administrador';
+    proyecto: string;
   };
 };
 

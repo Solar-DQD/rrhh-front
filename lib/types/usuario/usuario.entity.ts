@@ -5,4 +5,5 @@ export type Usuario = {
     nombre: string;
     id_estadousuario: number;
     id_tipousuario: number;
+    id_proyecto: number;
 }

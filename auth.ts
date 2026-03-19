@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { getUsuarioByEmail } from './actions/usuario/usuario.actions';
 import { getTipoUsuarioById } from './actions/tipoUsuario/tipoUsuario.actions';
+import { getProyectoById } from './actions/proyecto/proyecto.actions';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [
@@ -42,16 +43,24 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                         return null;
                     };
 
+                    let proyecto;
+                    if (usuario.id_proyecto) {
+                        proyecto = await getProyectoById({
+                            id: usuario.id_proyecto
+                        });
+                    };
+
                     return {
                         id: usuario.id.toString(),
                         name: usuario.nombre,
                         email: usuario.email,
                         tipoUsuario: tipoUsuario.nombre as 'Administrativo' | 'Recursos Humanos' | 'Administrador',
+                        proyecto: proyecto?.nombre === undefined ? '' : proyecto.nombre
                     };
                 } catch (error) {
                     console.error('Auth error:', error);
                     return null;
-                }
+                };
             },
         }),
     ],
@@ -71,6 +80,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 token.id = user.id;
                 token.name = user.name;
                 token.tipoUsuario = user.tipoUsuario;
+                token.proyecto = user.proyecto;
             };
             return token;
         },
@@ -80,6 +90,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 session.user.id = token.id as string;
                 session.user.name = token.name as string;
                 session.user.tipoUsuario = token.tipoUsuario as 'Administrativo' | 'Recursos Humanos' | 'Administrador';
+                session.user.proyecto = token.proyecto as string;
             };
             return session;
         },
