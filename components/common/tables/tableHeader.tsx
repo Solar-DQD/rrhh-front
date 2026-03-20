@@ -1,0 +1,37 @@
+import { TableCell, TableHead, TableRow } from "@mui/material";
+
+export function TableHeader({
+    titles,
+    sortColumn,
+    sortDirection
+}: {
+    titles: { title: string, width?: string, span?: number, alignment: 'center' | 'left' | 'right' | 'inherit' | 'justify', onClick?: () => void, column?: string }[],
+    sortColumn?: string,
+    sortDirection?: string
+}) {
+    return (
+        <TableHead
+            sx={{
+                '& .MuiTableCell-root': {
+                    borderBottom: '2px solid #ED6C02 !important',
+                    backgroundColor: '#fff !important',
+                    zIndex: 1100,
+                }
+            }}
+        >
+            <TableRow>
+                {titles.map((title, index) => {
+                    let titleClassName = 'text-gray-700 font-bold text-sm'
+                    if (title.column) titleClassName = `text-gray-700 font-bold text-sm ${sortColumn === title.column ? (sortDirection === 'ASC' ? 'text-orange-500' : 'text-red-500') : ''}`
+                    return (
+                        <TableCell align={title.alignment} onClick={title.onClick} width={title.width} colSpan={title.span} key={index}>
+                            <div className={titleClassName}>
+                                {title.title}
+                            </div>
+                        </TableCell>
+                    );
+                })}
+            </TableRow>
+        </TableHead>
+    );
+};

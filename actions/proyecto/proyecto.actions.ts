@@ -2,6 +2,7 @@
 
 import CONFIG from '@/config'
 import { Proyecto } from '@/lib/types/proyecto/proyecto.entity'
+import { getToken } from '@/lib/utils/getToken';
 
 export async function getProyectoById(params: { id: number }): Promise<Proyecto> {
     try {

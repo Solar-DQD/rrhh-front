@@ -13,9 +13,7 @@ export async function getUsuarioByEmail(params: { email: string }): Promise<Usua
             method: 'GET'
         });
 
-        if (!usuario.ok) {
-            throw new Error(`Error getting usuario: ${usuario.status} - ${usuario.statusText}`);
-        };
+        if (!usuario.ok) throw new Error(`Error getting usuario: ${usuario.status} - ${usuario.statusText}`);
 
         return await usuario.json();
     } catch (error) {

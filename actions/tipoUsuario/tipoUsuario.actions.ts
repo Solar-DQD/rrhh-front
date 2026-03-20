@@ -9,9 +9,7 @@ export async function getTipoUsuarioById(params: { id: number }): Promise<TipoUs
             method: 'GET'
         });
 
-        if (!tipoUsuario.ok) {
-            throw new Error(`Error getting tipoUsuario with id ${params.id}: ${tipoUsuario.status} - ${tipoUsuario.statusText}`);
-        };
+        if (!tipoUsuario.ok) throw new Error(`Error getting tipoUsuario with id ${params.id}: ${tipoUsuario.status} - ${tipoUsuario.statusText}`);
 
         return await tipoUsuario.json();
     } catch (error) {
