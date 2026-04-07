@@ -118,6 +118,18 @@ export default function Empleados({ esAdministrativo }: { esAdministrativo?: boo
                 ]}
                 actions={
                     <>
+                        <Button
+                            variant='contained'
+                            color='info'
+                            size='small'
+                            className='!h-10'
+                            disableElevation
+                            onClick={() => sync.mutate()}
+                            disabled={sync.isPending}
+                            endIcon={!sync.isPending ? <SyncIcon /> : <SyncIcon className='animate-spin' style={{ animationDirection: 'reverse' }} />}
+                        >
+                            Sincronizar Empleados
+                        </Button>
                         {esAdministrativo &&
                             <Button
                                 variant='contained'
@@ -132,18 +144,6 @@ export default function Empleados({ esAdministrativo }: { esAdministrativo?: boo
                                 Consultar Asistencia
                             </Button>
                         }
-                        <Button
-                            variant='contained'
-                            color='info'
-                            size='small'
-                            className='!h-10'
-                            disableElevation
-                            onClick={() => sync.mutate()}
-                            disabled={sync.isPending}
-                            endIcon={!sync.isPending ? <SyncIcon /> : <SyncIcon className='animate-spin' style={{ animationDirection: 'reverse' }} />}
-                        >
-                            Sincronizar Empleados
-                        </Button>
                     </>
                 }
             />

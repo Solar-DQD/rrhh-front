@@ -17,7 +17,7 @@ export async function getImportacionCountByProyecto(): Promise<number> {
 
         if (!total.ok) throw new Error(`Error getting total importaciones: ${total.status} - ${total.statusText}`);
 
-        return total.json();
+        return await total.json();
     } catch (error) {
         console.error('Get importacion count failed: ', {
             timestamp: new Date().toISOString(),

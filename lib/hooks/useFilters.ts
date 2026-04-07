@@ -5,7 +5,7 @@ import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export type FilterConfig<TForm extends FieldValues = FieldValues> = {
     key: Path<TForm>;
-    type: 'debounced-text' | 'select' | 'toggle';
+    type: 'debounced-text' | 'select' | 'toggle' | 'datepicker';
     normalKey?: Path<TForm>;
     defaultVisible?: boolean;
     debounceMs?: number;

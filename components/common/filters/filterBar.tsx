@@ -1,15 +1,20 @@
 import FilterAltOffRoundedIcon from '@mui/icons-material/FilterAltOffRounded';
 import FilterAltRoundedIcon from '@mui/icons-material/FilterAltRounded';
-import { Button, ButtonGroup, Menu, MenuItem, TextField } from "@mui/material";
+import { Button, ButtonGroup, Menu, MenuItem, Skeleton, TextField } from "@mui/material";
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import 'dayjs/locale/es';
 import { ReactNode } from "react";
 
 type FilterBarItem = {
     key: string
     menuLabel: string
     inputLabel: string
-    inputType: 'text' | 'number' | 'select'
+    inputType: 'text' | 'number' | 'select' | 'datepicker'
     options?: { id: number, nombre: string }[]
     value: string | number
+    loading?: boolean
 }
 
 type FiltersHook = {
@@ -33,6 +38,32 @@ const selectSlotProps = {
 
 function FilterInput({ item, onChange }: { item: FilterBarItem, onChange: (key: string, value: any) => void }) {
     const isSelect = item.inputType === 'select';
+
+    if (item.loading) {
+        return <Skeleton variant='rectangular' height={40} className='flex-1' sx={{ borderRadius: '5px' }} />;
+    }
+
+    if (item.inputType === 'datepicker') {
+        return (
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+                <DatePicker
+                    label={item.inputLabel}
+                    value={item.value ? dayjs(item.value as string, 'DD-MM-YYYY') : null}
+                    onChange={(newValue) => onChange(item.key, newValue ? newValue.format('DD-MM-YYYY') : '')}
+                    format='DD-MM-YYYY'
+                    slotProps={{
+                        textField: {
+                            variant: 'outlined',
+                            color: 'warning',
+                            size: 'small',
+                            fullWidth: true,
+                        }
+                    }}
+                />
+            </LocalizationProvider>
+        );
+    }
+
     return (
         <TextField
             key={item.key}
@@ -58,12 +89,14 @@ export function FilterBar({
     filtersHook,
     items,
     actions,
-    showClean = true
+    showClean = true,
+    showMenu = true
 }: {
     filtersHook: FiltersHook
     items: FilterBarItem[]
     actions?: ReactNode
     showClean?: boolean
+    showMenu?: boolean
 }) {
     const {
         anchor, openFilters, visibility, setVisibility,
@@ -75,36 +108,42 @@ export function FilterBar({
         handleCloseFilters();
     };
 
+    const visibleItems = showMenu
+        ? items.filter(item => visibility[item.key])
+        : items;
+
     return (
         <div className='flex flex-row gap-2 w-full shrink-0 flex-wrap items-start mt-2'>
-            <div className='shrink-0'>
-                <ButtonGroup variant='outlined' color='inherit' className='!h-10'>
-                    <Button
-                        variant='contained'
-                        className='!bg-gray-800 hover:!bg-gray-700 !text-white'
-                        disableElevation
-                        endIcon={<FilterAltRoundedIcon />}
-                        onClick={handleOpenFilters}
-                    >
-                        Filtros
-                    </Button>
-                    {showClean && (
-                        <Button variant='contained' color='error' disableElevation onClick={handleCleanFilters}>
-                            <FilterAltOffRoundedIcon />
+            {showMenu && (
+                <div className='shrink-0'>
+                    <ButtonGroup variant='outlined' color='inherit' className='!h-10'>
+                        <Button
+                            variant='contained'
+                            className='!bg-gray-800 hover:!bg-gray-700 !text-white'
+                            disableElevation
+                            endIcon={<FilterAltRoundedIcon />}
+                            onClick={handleOpenFilters}
+                        >
+                            Filtros
                         </Button>
-                    )}
-                </ButtonGroup>
-                <Menu anchorEl={anchor} open={openFilters} onClose={handleCloseFilters}>
-                    {items.map(item => (
-                        <MenuItem key={item.key} onClick={() => handleSelectFilter(item.key)}>
-                            {item.menuLabel}
-                        </MenuItem>
-                    ))}
-                </Menu>
-            </div>
+                        {showClean && (
+                            <Button variant='contained' color='error' disableElevation onClick={handleCleanFilters}>
+                                <FilterAltOffRoundedIcon />
+                            </Button>
+                        )}
+                    </ButtonGroup>
+                    <Menu anchorEl={anchor} open={openFilters} onClose={handleCloseFilters}>
+                        {items.map(item => (
+                            <MenuItem key={item.key} onClick={() => handleSelectFilter(item.key)}>
+                                {item.menuLabel}
+                            </MenuItem>
+                        ))}
+                    </Menu>
+                </div>
+            )}
             <div className='flex-1 min-w-[280px] max-w-2xl'>
                 <div className='flex items-center justify-start w-full gap-2 sm:gap-3'>
-                    {items.filter(item => visibility[item.key]).map(item => (
+                    {visibleItems.map(item => (
                         <FilterInput key={item.key} item={item} onChange={handleChange} />
                     ))}
                 </div>
