@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import PageWrapper from "@/components/common/wrappers/pageWrapper";
-import Empleados from "@/components/empleados";
+import PageWrapper from "@/lib/components/common/wrappers/pageWrapper";
+import Empleados from "@/lib/components/empleados";
 import { redirect } from "next/navigation";
 
 export default async function AdministrativoEmpleadosPage() {

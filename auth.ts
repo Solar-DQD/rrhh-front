@@ -1,9 +1,9 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import { getUsuarioByEmail } from './actions/usuario/usuario.actions';
-import { getTipoUsuarioById } from './actions/tipoUsuario/tipoUsuario.actions';
-import { getProyectoById } from './actions/proyecto/proyecto.actions';
+import { getUsuarioByEmail } from './lib/actions/usuario/usuario.actions';
+import { getTipoUsuarioById } from './lib/actions/tipoUsuario/tipoUsuario.actions';
+import { getProyectoById } from './lib/actions/proyecto/proyecto.actions';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     providers: [

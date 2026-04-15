@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import AdministrativoInicio from "@/components/administrativo/inicio";
-import PageWrapper from "@/components/common/wrappers/pageWrapper";
+import AdministrativoInicio from "@/lib/components/administrativo/inicio";
+import PageWrapper from "@/lib/components/common/wrappers/pageWrapper";
 import { redirect } from "next/navigation";
 
 export default async function AdministrativoInicioPage() {

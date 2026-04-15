@@ -1,5 +1,5 @@
 import { auth } from "@/auth";
-import PageWrapper from "@/components/common/wrappers/pageWrapper";
+import PageWrapper from "@/lib/components/common/wrappers/pageWrapper";
 import { redirect } from "next/navigation";
 
 export default async function RRHHInicioPage() {

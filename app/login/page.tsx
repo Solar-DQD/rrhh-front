@@ -1,7 +1,7 @@
 'use client'
 
-import PageWrapper from "@/components/common/wrappers/pageWrapper"
-import LoginForm from "@/components/login";
+import PageWrapper from "@/lib/components/common/wrappers/pageWrapper"
+import LoginForm from "@/lib/components/login";
 
 export default function LoginPage() {
     return (
