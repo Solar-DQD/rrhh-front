@@ -16,6 +16,7 @@ import SyncIcon from '@mui/icons-material/Sync';
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded';
 import SaveAsRoundedIcon from '@mui/icons-material/SaveAsRounded';
 import { useEffect } from "react";
+import { ControlledSelect } from "../../common/inputs/controlledSelect";
 
 export default function EmpleadosTableRow({
     empleado,
@@ -83,42 +84,11 @@ export default function EmpleadosTableRow({
             </TableRowCell>
             <TableRowCell alignment='center'>
                 {show.show ? (
-                    <Controller
-                        name='id_modalidadvalidacion'
+                    <ControlledSelect
                         control={control}
-                        render={({ field, fieldState: { error } }) => (
-                            <TextField
-                                {...field}
-                                variant='outlined'
-                                color='warning'
-                                size='small'
-                                select
-                                fullWidth
-                                error={!!error}
-                                helperText={error?.message}
-                                disabled={modalidadesValidacion?.length === 0 || !modalidadesValidacion}
-                                slotProps={{
-                                    select: {
-                                        MenuProps: {
-                                            slotProps: {
-                                                paper: {
-                                                    style: {
-                                                        marginTop: '4px',
-                                                        maxHeight: '200px',
-                                                    },
-                                                },
-                                            },
-                                        },
-                                    },
-                                }}
-                            >
-                                {modalidadesValidacion?.map((modalidadValidacion: ModalidadValidacion) => (
-                                    <MenuItem key={modalidadValidacion.id} value={modalidadValidacion.id}>
-                                        {modalidadValidacion.nombre}
-                                    </MenuItem>
-                                )) || []}
-                            </TextField>
-                        )}
+                        name='id_modalidadvalidacion'
+                        disabled={!modalidadesValidacion || modalidadesValidacion.length === 0}
+                        items={modalidadesValidacion}
                     />
                 ) : (
                     empleado.modalidadvalidacion

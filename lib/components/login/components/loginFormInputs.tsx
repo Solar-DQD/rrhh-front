@@ -1,45 +1,24 @@
 import { TextField } from "@mui/material";
 import { Control, Controller } from "react-hook-form";
 import { LoginFormData } from "../types/loginFormData";
+import { ControlledTextField } from "../../common/inputs/controlledTextField";
 
 export default function LoginFormInputs({ control }: { control: Control<LoginFormData> }) {
     return (
         <div className='flex flex-col w-full gap-3 sm:gap-4'>
-            <Controller
+            <ControlledTextField
+                control={control}
                 name='email'
-                control={control}
-                rules={{ required: 'Debe ingresar su correo electronico' }}
-                render={({ field, fieldState: { error } }) => (
-                    <TextField
-                        {...field}
-                        label='Correo Electronico'
-                        variant='outlined'
-                        color='warning'
-                        size='small'
-                        fullWidth
-                        type='email'
-                        error={!!error}
-                        helperText={error?.message}
-                    />
-                )}
+                label='Correo Electrónico'
+                rules={{ required: 'Debe ingresar un correo' }}
+                type='email'
             />
-            <Controller
-                name='password'
+            <ControlledTextField
                 control={control}
-                rules={{ required: 'Debe ingresar su contraseña' }}
-                render={({ field, fieldState: { error } }) => (
-                    <TextField
-                        {...field}
-                        label='Contraseña'
-                        variant='outlined'
-                        color='warning'
-                        size='small'
-                        fullWidth
-                        type='password'
-                        error={!!error}
-                        helperText={error?.message}
-                    />
-                )}
+                name='password'
+                label='Contraseña'
+                rules={{ required: 'Debe ingresar una contraseña' }}
+                type='password'
             />
         </div>
     );

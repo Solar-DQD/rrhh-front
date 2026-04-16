@@ -15,9 +15,11 @@ const categories = [
 export function InicioStats({
     asistencia,
     importaciones,
+    proyecto
 }: {
     asistencia: { data?: AsistenciaResponseDto, isLoading: boolean },
-    importaciones: { data?: number, isLoading: boolean }
+    importaciones: { data?: number, isLoading: boolean },
+    proyecto: number
 }) {
     return (
         <>
@@ -32,7 +34,7 @@ export function InicioStats({
                 </div>
                 <Button
                     component={Link}
-                    href={'/administrativo/empleados/asistencia'}
+                    href={`/administrativo/empleados/asistencia?id_proyecto=${proyecto}`}
                     variant='contained'
                     className='!bg-gray-800 !text-white !border-gray-800 hover:!bg-white hover:!text-orange-600 !border-2 hover:!border-orange-500'
                     disableElevation
@@ -46,7 +48,7 @@ export function InicioStats({
                 <InicioCard category='Importaciones Pendientes de Revisión' total={importaciones.data} isLoading={importaciones.isLoading} />
                 <Button
                     component={Link}
-                    href={'/administrativo/importaciones'}
+                    href={`/administrativo/importaciones?id_proyecto=${proyecto}&incompletas=true`}
                     variant='contained'
                     className='!bg-gray-800 !text-white !border-gray-800 hover:!bg-white hover:!text-orange-600 !border-2 hover:!border-orange-500'
                     disableElevation

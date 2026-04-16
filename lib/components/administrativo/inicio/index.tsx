@@ -16,7 +16,7 @@ import { TableSkeleton } from '@/lib/components/common/tables/tableSkeleton';
 import { InicioAsistenciaTableRow } from './components/inicioAsistenciaTableRow';
 import { InicioStats } from './components/inicioStats';
 
-export default function AdministrativoInicio() {
+export default function AdministrativoInicio({ proyecto }: { proyecto: number }) {
     //hooks
     const { showWarning } = useSnackbar();
     const pagination = usePagination({ limit: 25 });
@@ -39,7 +39,7 @@ export default function AdministrativoInicio() {
         <div className='flex flex-row gap-2 w-full h-full overflow-hidden'>
             {/** Stats */}
             <div className='flex flex-col flex-1 gap-2 overflow-hidden'>
-                <InicioStats asistencia={asistencia} importaciones={importaciones} />
+                <InicioStats asistencia={asistencia} importaciones={importaciones} proyecto={proyecto} />
             </div>
             {/** Tabla */}
             <div className='flex flex-col lg:flex-2 flex-1 gap-2 overflow-hidden'>

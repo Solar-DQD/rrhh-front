@@ -1,4 +1,5 @@
 import { MenuItem, Skeleton, TextField } from "@mui/material";
+import { HTMLInputTypeAttribute } from "react";
 import { Control, Controller, FieldValues, Path, RegisterOptions } from "react-hook-form";
 
 const selectSlotProps = {
@@ -14,14 +15,13 @@ interface IdConNombre {
     nombre: string
 }
 
-export function ControlledSelect<T extends FieldValues, K extends IdConNombre>({
+export function ControlledTextField<T extends FieldValues>({
     control,
     name,
     label,
     rules,
-    isLoading = false,
     disabled,
-    items
+    type
 }: {
     control: Control<T>,
     name: Path<T>,
@@ -29,18 +29,8 @@ export function ControlledSelect<T extends FieldValues, K extends IdConNombre>({
     rules?: Omit<RegisterOptions<T, Path<T>>, 'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'>,
     isLoading?: boolean,
     disabled?: boolean,
-    items: K[]
+    type?: HTMLInputTypeAttribute
 }) {
-    if (isLoading) {
-        return (
-            <Skeleton
-                variant='rectangular'
-                width='100%'
-                height='40px'
-                sx={{ borderRadius: '5px' }}
-            />
-        );
-    }
     return (
         <Controller
             name={name}
@@ -54,18 +44,11 @@ export function ControlledSelect<T extends FieldValues, K extends IdConNombre>({
                     color='warning'
                     size='small'
                     fullWidth
-                    select
+                    type={type}
+                    disabled={disabled}
                     error={!!error}
                     helperText={error?.message}
-                    disabled={disabled ?? false}
-                    slotProps={selectSlotProps}
-                >
-                    {items.map((item) => (
-                        <MenuItem key={item.id} value={item.id}>
-                            {item.nombre}
-                        </MenuItem>
-                    ))}
-                </TextField>
+                />
             )}
         />
     );

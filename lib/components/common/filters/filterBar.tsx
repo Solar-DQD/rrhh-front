@@ -125,8 +125,8 @@ export function FilterBar({
     };
 
     const visibleItems = showMenu
-        ? items.filter(item => visibility[item.key])
-        : items;
+        ? items.filter(item => visibility[item.key] && item.inputType !== 'toggle')
+        : items.filter(item => item.inputType !== 'toggle');
 
     const toggleItems = items.filter(item => item.inputType === 'toggle');
 

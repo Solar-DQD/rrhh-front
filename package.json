@@ -23,6 +23,7 @@
     "next-auth": "^5.0.0-beta.30",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "react-dropzone": "^15.0.0",
     "react-hook-form": "^7.71.2"
   },
   "devDependencies": {
