@@ -1,10 +1,10 @@
 import { Skeleton } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Control, Controller, FieldValues, Path, RegisterOptions } from "react-hook-form";
 import dayjs from 'dayjs';
 
-export function ControlledDatePicker<T extends FieldValues>({
+export function ControlledTimePicker<T extends FieldValues>({
     control,
     name,
     label,
@@ -36,15 +36,17 @@ export function ControlledDatePicker<T extends FieldValues>({
                 control={control}
                 rules={rules}
                 render={({ field: { onChange, value, ...restField }, fieldState: { error } }) => (
-                    <DatePicker
+                    <TimePicker
                         {...restField}
                         label={label}
                         className='!w-[100%]'
-                        value={value ? dayjs(value, 'DD-MM-YYYY') : null}
+                        value={value ? dayjs(value, 'HH:mm:ss') : null}
                         onChange={(newValue) => {
-                            onChange(newValue ? newValue.format('DD-MM-YYYY') : '');
+                            onChange(newValue ? newValue.format('HH:mm:ss') : '');
                         }}
-                        format='DD-MM-YYYY'
+                        format='HH:mm:ss'
+                        ampm={false}
+                        views={['hours', 'minutes', 'seconds']}
                         slotProps={{
                             textField: {
                                 variant: 'outlined',

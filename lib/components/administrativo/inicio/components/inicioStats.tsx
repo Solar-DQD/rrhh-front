@@ -41,7 +41,7 @@ export function InicioStats({
                     fullWidth
                     endIcon={<NumbersRoundedIcon />}
                 >
-                    Consultar Asistencia
+                    Consultar Asistencia de Otro Día
                 </Button>
             </div>
             <div className='flex flex-col flex-1 gap-2'>

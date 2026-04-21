@@ -53,6 +53,8 @@ export const useFilters = <TForm extends FieldValues>(
                 if (field.type === 'debounced-text') {
                     if (field.normalKey) setValue(field.normalKey as Path<TForm>, value as any);
                     setValue(field.key as Path<TForm>, value as any);
+                } else if (field.type === 'toggle') {
+                    setValue(field.key as Path<TForm>, (value === 'true') as any);
                 } else {
                     setValue(field.key as Path<TForm>, value as any);
                 }

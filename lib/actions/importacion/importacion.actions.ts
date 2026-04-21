@@ -98,3 +98,29 @@ export async function deleteImportacion(params: { id: number }): Promise<void> {
         throw error;
     }
 };
+
+export async function setImportacionCompleta(params: { id: number }): Promise<void> {
+    try {
+        const token = await getToken();
+
+        const respuesta = await fetch(`${CONFIG.URL_BASE}${CONFIG.URL_IMPORTACION}/${params.id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        });
+
+        if (!respuesta.ok) throw new Error(`Error setting importacion with id as complete ${params.id}: ${respuesta.status} - ${respuesta.statusText}`);
+
+        return await respuesta.json();
+    } catch (error) {
+        console.error('Setting importacion as complete failed: ', {
+            id: params.id,
+            timestamp: new Date().toISOString(),
+            error: error instanceof Error ? error.message : error,
+            stack: error instanceof Error ? error.stack : undefined
+        });
+
+        throw error;
+    };
+};

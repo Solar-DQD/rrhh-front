@@ -26,7 +26,7 @@ import ImportacionesTableRow from "./components/importacionesTableRow";
 
 export default function Informes({ esAdministrativo }: { esAdministrativo?: boolean }) {
     //hooks
-    const { showSuccess, showError, showWarning } = useSnackbar();
+    const { showWarning } = useSnackbar();
     const { setValue, watch } = useForm<ImportacionesTableFiltersFormData>({
         defaultValues: {
             id_proyecto: '',
